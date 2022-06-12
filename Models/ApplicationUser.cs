@@ -11,6 +11,7 @@ namespace dotnetcoreCalendar.Models
     /// </summary>
     public class ApplicationUser: IdentityUser
     {
+        public virtual ICollection<Event> Events { get; set; }
 
     }
 }

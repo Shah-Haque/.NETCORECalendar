@@ -39,6 +39,9 @@ namespace dotnetcoreCalendar.Models
         /// This gets the location through a 1:many basis
         /// </summary>
         public virtual Location Location { get; set; }
-
+        /// <summary>
+        /// THis gets the events to display itself to the user in a many to one basis
+        /// </summary>
+        public virtual ApplicationUser User { get; set; }
     }
 }
