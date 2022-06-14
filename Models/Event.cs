@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -43,5 +44,51 @@ namespace dotnetcoreCalendar.Models
         /// THis gets the events to display itself to the user in a many to one basis
         /// </summary>
         public virtual ApplicationUser User { get; set; }
+
+        /// <summary>
+        /// This stores all instructions for what the form will do the event
+        /// </summary>
+        /// <param name="form"></param>
+        public Event(IFormCollection form, Location location)
+        {
+            //This will parse the new event by the event id
+            Id = int.Parse(form["Id"]);
+            //This will display the name of the event
+            Name = form["Name"];
+            //This will display the description of the event
+            Description = form["Description"];
+            //This will parse the starting time of the event
+            StartTime = DateTime.Parse(form["StartTime"]);
+            //This will parse the ending time of the event
+            EndTime = DateTime.Parse(form["EndTime"]);
+            //This will look for the locations and returns it by the first or default value
+            Location = location;
+        }
+
+
+        /// <summary>
+        /// This will do the exact same thing as the event constructor but instead will update 
+        /// any existing event
+        /// </summary>
+        /// <param name="form"></param>
+        public void UpdateEvent(IFormCollection form, Location location)
+        {
+            //This will parse the new event by the event id
+            Id = int.Parse(form["Id"]);
+            //This will display the name of the event
+            Name = form["Name"];
+            //This will display the description of the event
+            Description = form["Description"];
+            //This will parse the starting time of the event
+            StartTime = DateTime.Parse(form["StartTime"]);
+            //This will parse the ending time of the event
+            EndTime = DateTime.Parse(form["EndTime"]);
+            //This will look for the locations and returns it by the first or default value
+            Location = location;
+        }
+    
+        public Event ()
+        {
+        }
     }
 }

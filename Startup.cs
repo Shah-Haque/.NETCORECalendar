@@ -16,6 +16,16 @@ using System.Threading.Tasks;
 
 namespace dotnetcoreCalendar
 {
+    /// <summary>
+    /// The code starts by declaring a class called Startup.
+    /// The code then calls the constructor of this class and passes in an instance of IConfiguration.
+    /// This is where the code gets interesting because it starts to configure services for the container.
+    /// The first service that is configured is AddDbContext.
+    /// This method takes two parameters, one being options which are passed into a lambda expression and another being Configuration.GetConnectionString("DefaultConnection").
+    /// In order to use SQL Server with this configuration, you must provide a connection string using GetConnectionString("DefaultConnection") as shown below: "Data Source=localhost;Initial Catalog=AdventureWorks;" "User ID=sa;Password=password;"
+    /// The code is used to configure the services in a container.
+    /// The code above will add an identity service, a database context and Entity Framework stores to the container.
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -33,6 +43,7 @@ namespace dotnetcoreCalendar
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<IDAL, DAL>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
