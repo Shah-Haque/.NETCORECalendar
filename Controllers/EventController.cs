@@ -1,40 +1,199 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc.Rendering;
+//using Microsoft.EntityFrameworkCore;
+//using dotnetcoreCalendar.Data;
+//using dotnetcoreCalendar.Models;
+//using dotnetcoreCalendar.Models.ViewModels;
+//using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Authorization;
+
+//namespace dotnetcoreCalendar.Controllers
+//{
+//    [Authorize]
+//    public class EventController : Controller
+//    {
+//        private readonly DAL _dal;
+
+//        public EventController(DAL dal)
+//        {
+//            _dal = dal;
+//        }
+
+//        // GET: Event
+//        public IActionResult Index()
+//        {
+//            if (TempData["Alert"] == null)
+//            {
+//                ViewData["Alert"] = TempData["Alert"];
+//            }
+//            return View(_dal.GetEvents());
+//        }
+
+//        // GET: Event/Details/5
+//        public IActionResult Details(int? id) //Nullable int 
+//        {
+//            if (id == null)
+//            {
+//                return NotFound();
+//            }
+
+//            var @event = _dal.GetEvent((int)id);
+//            if (@event == null)
+//            {
+//                return NotFound();
+//            }
+
+//            return View(@event);
+//        }
+
+//        // GET: Event/Create
+//        public IActionResult Create()
+//        {
+
+//            return View(new EventViewModel(_dal.GetLocations()));
+//        }
+
+//        // POST: Event/Create
+//        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+//        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public async Task <IActionResult> Create(EventViewModel vm, IFormCollection form)
+//        {
+//            try
+//            {
+//                _dal.CreateEvent(form);
+//                TempData["Alert"] = "Success! You have created a new event:" + form["Name"];
+//                return RedirectToAction("Index");
+//            }
+//            catch (Exception ex)
+//            {
+
+//                ViewData["Alert"] = "An error has occured:" + ex.Message;
+//                return View(vm);
+//            }
+
+//        }
+
+//        // GET: Event/Edit/5
+//        public ActionResult Edit(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return NotFound();
+//            }
+
+//            var @event = _dal.GetEvent((int)id);
+//            if (@event == null)
+//            {
+//                return NotFound();
+//            }
+//            return View(@event);
+//        }
+
+//        // POST: Event/Edit/5
+//        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+//        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+//        [HttpPost]
+//        [ValidateAntiForgeryToken]
+//        public async Task <IActionResult> Edit(int id, EventViewModel vm, IFormCollection form)
+//        {
+//            if (id != vm.Event.Id)
+//            {
+//                return NotFound();
+//            }
+
+//            try
+//            {
+//                _dal.UpdateEvent(form);
+//                TempData["Alert"]="You have sucessfully modifed a Event for:" + vm.Event.Name;
+//                return RedirectToAction(nameof(Index));
+
+//            }
+
+//            catch (Exception ex)
+//            {
+//                ViewData["Alert"] = "An error has occured:" + ex.Message;
+//                return View(vm);
+//            }
+
+//        }
+
+//        // GET: Event/Delete/5
+//        public IActionResult Delete(int? id)
+//        {
+//            if (id == null)
+//            {
+//                return NotFound();
+//            }
+
+//            var @event = _dal.GetEvent((int)id);
+//            if (@event == null)
+//            {
+//                return NotFound();
+//            }
+
+//            return View(@event);
+//        }
+
+//        // POST: Event/Delete/5
+//        [HttpPost, ActionName("Delete")]
+//        [ValidateAntiForgeryToken]
+//        public IActionResult DeleteConfirmed(int id)
+//        {
+//             _dal.DeleteEvent(id);
+//            TempData["Alert"] = "You have deleted an event";
+//            return RedirectToAction(nameof(Index));
+//        }
+//    }
+//}
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using dotnetcoreCalendar.Data;
-using dotnetcoreCalendar.Models;
+using dotnetcoreCalendar.Models.ViewModels;
+//using DotNetCoreCalendar.Controllers.ActionFilters;
 
-namespace dotnetcoreCalendar.Controllers
+namespace DotNetCoreCalendar.Controllers
 {
+    [Authorize]
     public class EventController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IDAL _dal;
 
-        public EventController(ApplicationDbContext context)
+
+        public EventController(IDAL dal)
         {
-            _context = context;
+            _dal = dal;
+
         }
 
         // GET: Event
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Events.ToListAsync());
+            if (TempData["Alert"] != null)
+            {
+                ViewData["Alert"] = TempData["Alert"];
+            }
+            return View(_dal.GetMyEvents(User.FindFirstValue(ClaimTypes.NameIdentifier)));
         }
 
         // GET: Event/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var @event = _dal.GetEvent((int)id);
             if (@event == null)
             {
                 return NotFound();
@@ -44,9 +203,11 @@ namespace dotnetcoreCalendar.Controllers
         }
 
         // GET: Event/Create
+
         public IActionResult Create()
         {
-            return View();
+
+            return View(new EventViewModel(_dal.GetLocations()));
         }
 
         // POST: Event/Create
@@ -54,78 +215,109 @@ namespace dotnetcoreCalendar.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,StartTime,EndTime")] Event @event)
+
+        public async Task<IActionResult> Create(EventViewModel vm, IFormCollection form)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _dal.CreateEvent(form);
+                TempData["Alert"] = "Success! You created a new event for: " + form["Event.Name"];
+                return RedirectToAction("Index");
             }
-            return View(@event);
+            catch (Exception ex)
+            {
+                ViewData["Alert"] = "An error occurred: " + ex.Message;
+                return View(vm);
+            }
         }
 
         // GET: Event/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+
+        public IActionResult Edit(int? id)
         {
+            //    if (id == null)
+            //    {
+            //        return NotFound();
+            //    }
+
+            //    var @event = _dal.GetEvent((int)id);
+            //    if (@event == null)
+            //    {
+            //        return NotFound();
+            //    }
+            //    var vm = new EventViewModel(@event, _dal.GetLocations(), User.FindFirstValue(ClaimTypes.NameIdentifier));
+            //    return View(vm);
+
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Events.FindAsync(id);
+            var @event = _dal.GetEvent((int)id);
             if (@event == null)
             {
                 return NotFound();
             }
             return View(@event);
+
         }
 
         // POST: Event/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
+
+        //public async Task<IActionResult> Edit(int id, IFormCollection form)
+        //{
+        //    try
+        //    {
+        //        _dal.UpdateEvent(form);
+        //        TempData["Alert"] = "Success! You modified an event for: " + form["Event.Name"];
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewData["Alert"] = "An error occurred: " + ex.Message;
+        //        var vm = new EventViewModel(_dal.GetEvent(id), _dal.GetLocations(), User.FindFirstValue(ClaimTypes.NameIdentifier));
+        //        return View(vm);
+        //    }
+        //}
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,StartTime,EndTime")] Event @event)
+        public async Task<IActionResult> Edit(int id, EventViewModel vm, IFormCollection form)
         {
-            if (id != @event.Id)
+            if (id != vm.Event.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(@event);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EventExists(@event.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _dal.UpdateEvent(form);
+                TempData["Alert"] = "You have sucessfully modifed a Event for:" + vm.Event.Name;
                 return RedirectToAction(nameof(Index));
+
             }
-            return View(@event);
+
+            catch (Exception ex)
+            {
+                ViewData["Alert"] = "An error has occured:" + ex.Message;
+                return View(vm);
+            }
+
         }
 
+
         // GET: Event/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var @event = _dal.GetEvent((int)id);
             if (@event == null)
             {
                 return NotFound();
@@ -137,17 +329,11 @@ namespace dotnetcoreCalendar.Controllers
         // POST: Event/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
-            _context.Events.Remove(@event);
-            await _context.SaveChangesAsync();
+            _dal.DeleteEvent(id);
+            TempData["Alert"] = "You deleted an event.";
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool EventExists(int id)
-        {
-            return _context.Events.Any(e => e.Id == id);
         }
     }
 }

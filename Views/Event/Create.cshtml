@@ -1,7 +1,8 @@
-﻿@model dotnetcoreCalendar.Models.Event
+﻿@model dotnetcoreCalendar.Models.ViewModels.EventViewModel
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
@@ -10,28 +11,35 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" id="create-event">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Event.Name" class="control-label"></label>
+                <input asp-for="Event.Name" class="form-control" />
+                <span asp-validation-for="Event.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Event.Description" class="control-label"></label>
+                <input asp-for="Event.Description" class="form-control" />
+                <span asp-validation-for="Event.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input asp-for="StartTime" class="form-control" />
-                <span asp-validation-for="StartTime" class="text-danger"></span>
+                <label asp-for="Event.StartTime" class="control-label"></label>
+                <input asp-for="Event.StartTime" class="form-control" />
+                <span asp-validation-for="Event.StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input asp-for="EndTime" class="form-control" />
-                <span asp-validation-for="EndTime" class="text-danger"></span>
+                <label asp-for="Event.EndTime" class="control-label"></label>
+                <input asp-for="Event.EndTime" class="form-control" />
+                <span asp-validation-for="Event.EndTime" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label>Location</label>
+                <!--This will create a dropdown list for the list of locations in the create event webpage-->
+                @Html.DropDownList("Location", Model.Location, "Select a Location", new  { @class="form-control" })
+            </div>
+
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
