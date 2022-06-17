@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<dotnetcoreCalendar.Models.Event>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "all events";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>View All My Events!!</h1>
 
 @if (ViewData["Alert"] != null)
  {
@@ -14,7 +14,7 @@
 
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create a New Event!!</a>
 </p>
 <table class="table">
     <thead>

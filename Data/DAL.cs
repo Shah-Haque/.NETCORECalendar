@@ -109,9 +109,9 @@ namespace dotnetcoreCalendar.Data
         /// <param name="form"></param>
         public void CreateEvent(IFormCollection form)
         {
+            var locname = form["Location"].ToString();
             //This is for every new event
-            var newevent = new Event
-                (form, db.Locations.FirstOrDefault(x => x.Name == form["Location"]));
+            var newevent = new Event(form, db.Locations.FirstOrDefault(x => x.Name ==locname));
             //This will create the event
             db.Events.Add(newevent);
             //This will save this event in the database
@@ -125,8 +125,10 @@ namespace dotnetcoreCalendar.Data
         /// </summary>
         public void UpdateEvent(IFormCollection form)
         {
-            var myevent = db.Events.FirstOrDefault(x => x.Id == int.Parse(form["Id"]));
-            var location = db.Locations.FirstOrDefault(x => x.Name == form["Location"]);
+            var eventid = int.Parse(form["Id"]);
+            var locname = form["Location"].ToString();
+            var myevent = db.Events.FirstOrDefault(x => x.Id == eventid);
+            var location = db.Locations.FirstOrDefault(x => x.Name == locname);
             myevent.UpdateEvent(form, location);
             db.Entry(myevent).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             db.SaveChanges();

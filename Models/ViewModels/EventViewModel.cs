@@ -10,7 +10,7 @@ namespace dotnetcoreCalendar.Models.ViewModels
     {
         public Event Event { get; set; }
 
-        public List<SelectListItem> Location { get; set; }
+        public List<SelectListItem> Location = new List<SelectListItem>();
 
         public string  LocationName { get; set; }
 
@@ -33,6 +33,10 @@ namespace dotnetcoreCalendar.Models.ViewModels
             {
                 Location.Add(new SelectListItem() { Text = loc.Name });
             }
+
+        }
+        public EventViewModel()
+        {
 
         }
     }

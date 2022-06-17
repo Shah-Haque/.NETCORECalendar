@@ -441,3 +441,6 @@ C:\Users\Dell\source\repos\dotnetcoreCalendar\dotnetcoreCalendar\obj\Debug\netco
 C:\Users\Dell\source\repos\dotnetcoreCalendar\dotnetcoreCalendar\obj\Debug\netcoreapp3.1\Razor\Views\Event\Details.cshtml.g.cs
 C:\Users\Dell\source\repos\dotnetcoreCalendar\dotnetcoreCalendar\obj\Debug\netcoreapp3.1\Razor\Views\Event\Edit.cshtml.g.cs
 C:\Users\Dell\source\repos\dotnetcoreCalendar\dotnetcoreCalendar\obj\Debug\netcoreapp3.1\Razor\Views\Event\Index.cshtml.g.cs
+C:\Users\Dell\source\repos\dotnetcoreCalendar\dotnetcoreCalendar\obj\Debug\netcoreapp3.1\Razor\Views\Location\Create.cshtml.g.cs
+C:\Users\Dell\source\repos\dotnetcoreCalendar\dotnetcoreCalendar\obj\Debug\netcoreapp3.1\Razor\Views\Location\Details.cshtml.g.cs
+C:\Users\Dell\source\repos\dotnetcoreCalendar\dotnetcoreCalendar\obj\Debug\netcoreapp3.1\Razor\Views\Location\Index.cshtml.g.cs

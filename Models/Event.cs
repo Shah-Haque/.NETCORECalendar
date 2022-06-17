@@ -52,15 +52,15 @@ namespace dotnetcoreCalendar.Models
         public Event(IFormCollection form, Location location)
         {
             //This will parse the new event by the event id
-            Id = int.Parse(form["Id"]);
+            //Id = int.Parse(form["Event.Id"].ToString());
             //This will display the name of the event
-            Name = form["Name"];
+            Name = form["Event.Name"].ToString();
             //This will display the description of the event
-            Description = form["Description"];
+            Description = form["Event.Description"].ToString();
             //This will parse the starting time of the event
-            StartTime = DateTime.Parse(form["StartTime"]);
+            StartTime = DateTime.Parse(form["Event.StartTime"].ToString());
             //This will parse the ending time of the event
-            EndTime = DateTime.Parse(form["EndTime"]);
+            EndTime = DateTime.Parse(form["Event.EndTime"].ToString());
             //This will look for the locations and returns it by the first or default value
             Location = location;
         }
@@ -74,15 +74,15 @@ namespace dotnetcoreCalendar.Models
         public void UpdateEvent(IFormCollection form, Location location)
         {
             //This will parse the new event by the event id
-            Id = int.Parse(form["Id"]);
+            //Id = int.Parse(form["Event.Id"].ToString());
             //This will display the name of the event
-            Name = form["Name"];
+            Name = form["Event.Name"].ToString();
             //This will display the description of the event
-            Description = form["Description"];
+            Description = form["Event.Description"].ToString();
             //This will parse the starting time of the event
-            StartTime = DateTime.Parse(form["StartTime"]);
+            StartTime = DateTime.Parse(form["Event.StartTime"].ToString());
             //This will parse the ending time of the event
-            EndTime = DateTime.Parse(form["EndTime"]);
+            EndTime = DateTime.Parse(form["Event.EndTime"].ToString());
             //This will look for the locations and returns it by the first or default value
             Location = location;
         }

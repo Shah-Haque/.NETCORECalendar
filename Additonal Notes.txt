@@ -1,4 +1,6 @@
 ﻿https://www.youtube.com/watch?v=znEQDboLIW4&list=PLwcqikdTELt4m8jW2ai_PR-Cr8Tbmoz8c&index=5
 Section 4: Create Controllers/Views
-42:24 / 1:56:51
+1:30:32 / 1:56:51
+
+
 
