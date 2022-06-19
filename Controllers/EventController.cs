@@ -93,7 +93,7 @@ namespace dotnetcoreCalendar.Controllers
                 return NotFound();
             }
             var vm = new EventViewModel(@event, _dal.GetLocations());
-            return View(@event);
+            return View(vm);
         }
 
         // POST: Event/Edit/5

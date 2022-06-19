@@ -125,7 +125,7 @@ namespace dotnetcoreCalendar.Data
         /// </summary>
         public void UpdateEvent(IFormCollection form)
         {
-            var eventid = int.Parse(form["Id"]);
+            var eventid = int.Parse(form["Event.Id"]);
             var locname = form["Location"].ToString();
             var myevent = db.Events.FirstOrDefault(x => x.Id == eventid);
             var location = db.Locations.FirstOrDefault(x => x.Name == locname);

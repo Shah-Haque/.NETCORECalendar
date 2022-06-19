@@ -47,7 +47,22 @@
 </div>
 
 <script>
+    function SetSelectedLocation(Location) {
+        var locations = document.getElementById('Location'), loc, i;
 
+        for (i = 0; i < locations.length; i++) {
+            loc = locations[i];
+            if (loc.innerText === Location) {
+                loc.selected = "true";
+            }
+        }
+    }
+
+    var eventlocation = "@Html.Raw(Model.LocationName)";
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        SetSelectedLocation(eventlocation);
+    });
 </script>
 
 
